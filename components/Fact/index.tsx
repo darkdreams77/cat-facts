@@ -34,7 +34,7 @@ const Fact = () => {
   }, [])
 
   return (
-    <Card sx={{ maxWidth: 345, width: '100%' }}>
+    <Card sx={{ maxWidth: 345, width: '100%' }} variant="outlined">
       <CardMedia component="img" height="140" src={catImage.url} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
