@@ -8,4 +8,5 @@ export type CatImageType = {
   id: string
   url: string
   width: number
+  breeds: never[]
 }

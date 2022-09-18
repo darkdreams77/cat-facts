@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { CatImageType } from '../../types/entities'
 import { fetchCatFact, fetchCatImage } from './thunk'
+import { CatImageType } from '../../types/entities'
 
 export interface CatDataState {
   fact: string
@@ -13,6 +13,7 @@ export const initialCatImage = {
   height: 0,
   url: '',
   id: '',
+  breeds: [],
 }
 
 const initialState: CatDataState = {
@@ -28,15 +29,18 @@ export const catDataSlice = createSlice({
       state.fact = action.payload
     },
     updateCatImage: (state, action: PayloadAction<CatImageType>) => {
-      state.image = action.payload
+      state.image = { ...action.payload }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCatFact.fulfilled, (state, { payload }) => {
       state.fact = payload.fact
     })
+    builder.addCase(fetchCatImage.pending, (state, { payload }) => {
+      state.image.url = 'https://c.tenor.com/4ENYQnaNI9QAAAAC/cat-wait.gif'
+    })
     builder.addCase(fetchCatImage.fulfilled, (state, { payload }) => {
-      state.image = payload.image
+      state.image = { ...payload }
     })
   },
 })
