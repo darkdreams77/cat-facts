@@ -1,9 +1,11 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react'
+import { Provider } from 'react-redux'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useMediaQuery } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
+import { store } from '../store'
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
 
@@ -38,12 +40,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Cat fact of the moment</title>
       </Head>
 
-      <ColorModeContext.Provider value={darkTheme}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+      <Provider store={store}>
+        <ColorModeContext.Provider value={darkTheme}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </ColorModeContext.Provider>
+      </Provider>
     </>
   )
 }

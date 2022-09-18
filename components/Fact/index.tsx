@@ -1,37 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Box } from '@mui/system'
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@mui/material'
+import React from 'react'
+import { Card, CardContent, CardMedia, Typography } from '@mui/material'
+
+import { useCatFact } from '../../hooks/useCatFact'
+import { useCatImage } from '../../hooks/useCatImage'
 
 const Fact = () => {
-  const [catFact, setCatFact] = useState<string>('')
-  const [catImage, setCatImage] = useState<any>('')
+  // const catImage = useTypedSelector((state) => state.catData.image)
+  // const catFact = useTypedSelector((state) => state.catData.fact)
 
-  useEffect(() => {
-    axios
-      .get('https://catfact.ninja/fact')
-      .then((res) => {
-        setCatFact(res.data.fact)
-      })
-      .catch((error) => console.error(error))
-
-    axios
-      .get('https://api.thecatapi.com/v1/images/search', {
-        params: {
-          'x-api-key': '44f356e7-1ed2-468c-93e6-24428117c37d',
-        },
-      })
-      .then((res) => {
-        setCatImage(res.data[0])
-      })
-      .catch((error) => console.error(error))
-  }, [])
+  const catFact = useCatFact()
+  const catImage = useCatImage()
 
   return (
     <Card sx={{ maxWidth: 345, width: '100%' }} variant="outlined">
